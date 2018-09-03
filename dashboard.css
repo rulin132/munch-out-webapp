@@ -17,16 +17,11 @@
 
 }
 
-
 .v{
 color: green;
 font-size: 18px;
 
 }
-
-
-
-
 
 #vegetable{
     border: solid 1px;
@@ -47,7 +42,6 @@ font-size: 18px;
 
 
 .d{
-
     color: blue;
 }
 
@@ -81,4 +75,3 @@ font-size: 18px;
     border: solid 1px;
     border-collapse: collapse;
 }
-
