@@ -1,0 +1,84 @@
+#h1{
+
+  text-align:center;
+  font-size: 20px;
+  font-family: sans-serif;
+  text-shadow: 4px 4px black;
+  color: white;
+   background: linear-gradient(45deg, red, blue);
+  line-height: 160px;
+
+}
+
+#p{
+
+    text-align: center;
+    font-size: 18px;
+
+}
+
+
+.v{
+color: green;
+font-size: 18px;
+
+}
+
+
+
+
+
+#vegetable{
+    border: solid 1px;
+    border-collapse: collapse;
+}
+
+
+.f{
+  color: yellow;
+
+}
+
+#fruit{
+    border: solid 1px;
+    border-collapse: collapse;
+
+}
+
+
+.d{
+
+    color: blue;
+}
+
+#Dairy{
+    border: solid 1px;
+    border-collapse: collapse;
+
+}
+
+#meat{
+    border: solid 1px;
+    border-collapse: collapse;
+}
+
+#seafood{
+    border: solid 1px;
+    border-collapse: collapse;
+}
+
+#left-over{
+    border: solid 1px;
+    border-collapse: collapse;
+}
+
+#pasta{
+    border: solid 1px;
+    border-collapse: collapse;
+}
+
+#other{
+    border: solid 1px;
+    border-collapse: collapse;
+}
+
