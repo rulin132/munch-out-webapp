@@ -1,0 +1,26 @@
+.hero-area{
+    text-align: center;
+    color: white;
+    background-color: #06c1cf;
+    /* line-height: 100px;
+    margin: 100%;
+    padding: 150px; */
+}
+
+.jumbotron.hero-area {
+    background: url(/kids-reading-books.jpg) center left / cover no-repeat #0079be;
+    color: white;
+    margin-bottom: 0;
+}
+
+.hero-area h1 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.hero-area a {
+    color: white;
+}
+
+a.underline {
+    text-decoration: underline;
+}
