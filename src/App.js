@@ -1,56 +1,56 @@
-import React, { Component } from 'react';
-import './App.css';
-import { Container, Row, Col, Navbar, Button, Jumbotron, NavbarBrand, NavbarToggler, Collapse, Form } from 'reactstrap';
-class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false
-    };
-  }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import PrivateRoute from './PrivateRoute';
+import Home from "./Home/index.js";
+import Login from "./Login";
+import SignUp from "./SignUp";
+import app from "./base";
+import Recipes from "./Recipes";
+import ForgotPassword from "./ForgotPassword";
+class App extends React.Component {
+  state = { loading: true, authenticated: false, user: null };
+  
+  componentWillMount() {
+    app.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          authenticated: true,
+          currentUser: user,
+          loading: false
+        });
+      } else {
+        this.setState({
+          authenticated: false,
+          currentUser: null,
+          loading: false
+        });
+      }
     });
   }
-  render() {
+
+  render(){
+    const { authenticated, loading } = this.state;
+
+    if (loading) {
+      return <p>Loading..</p>;
+    }
+
     return (
-      <div>
-        <Navbar color="dark" dark  expand="lg" className="fixed-top">
-          <NavbarBrand href="/">Munch Out</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-        
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Form className="form-inline my-2 my-lg-0 ml-auto">
-              <Button color="success" outline className="my-2 my-sm-0 mx-2 text-light"  href="sign-up.html">
-                Sign Up
-              </Button>
-              <Button color="success" className="my-2 my-sm-0 mx-2 text-light" href="sign-in.html">
-                Sign In
-              </Button>
-            </Form>
-          </Collapse>
-        </Navbar>
-        <Jumbotron className="hero-area mt-5">
-          <Container>
-            <Row className="align-items-center">
-              <Col sm>
-                <h1 className="display-2 text-center">Munch Out</h1>
-                <p className="display-4 text-center">A website you can save all your favourite recipes on.</p>
-                <p className="lead text-center">
-                  <Button color="success" size="lg" href="sign-up.html">Register Free Account</Button>
-                </p>
-                <p className="lead text-center">Already registered? 
-                  <a className="underline" href="sign-in.html">Log in</a>.
-                </p>
-              </Col>
-            </Row>
-          </Container>
-        </Jumbotron>
-      </div>
-    );
+      <Router>
+        <div>
+        <Route exact path="/" component={Home} authenticated={authenticated} />
+          <PrivateRoute
+            exact
+            path="/recipes"
+            component={Recipes}
+            authenticated={authenticated}
+          />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/passwordreset" component={ForgotPassword} />
+        </div>
+      </Router>
+    )
   }
 }
 
