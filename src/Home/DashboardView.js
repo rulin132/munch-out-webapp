@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import Navigation from '../Navigation';
+import {Container} from 'reactstrap';
 
 class DashboardView extends Component {
   render() {
@@ -8,79 +9,19 @@ class DashboardView extends Component {
   <div>
     <Navigation authenticated={this.props.authenticated} />
 
-    <h1>SAVED RECIPES</h1>
+<Container>
+      <h1>Welcome to Munch Out</h1>
 
-    <p>Click on the recipe you want to view</p>
+    <form>
+      <input type="search" placeholder="Search for Recipes" />
+    </form>
 
-    <h2>VEGETABLE RECIPES</h2>
+    <h2>Latest Shopping List</h2>
+      <ul><li>Item 1</li></ul>
+    <h2>Most Recipes</h2>
 
-    <div id="vegetable">
-      <table>
-        <tr><td>Recipe Name</td></tr>
-        <tr><td>Date Placed In Fridge</td></tr>
-      </table>
-    </div>
-
-    <h2>FRUIT RECIPES</h2>
-
-    <div id="fruit">
-      <table>
-        <tr><td>Recipe Name</td></tr>
-        <tr><td>Date Placed In Fridge</td></tr>
-      </table>
-    </div> 
-
-    <h2>DAIRY RECIPES</h2>
-
-    <div id="dairy">
-      <table>
-        <tr><td>Recipe Name</td></tr>
-        <tr><td>Date Placed In Fridge</td></tr>
-      </table>
-    </div>
-
-    <h2>MEAT RECIPES</h2>
-    <div id="meat">
-      <table>
-        <tr><td>Recipe Name</td></tr>
-        <tr><td>Date Placed In Fridge</td></tr>
-      </table>
-    </div>
-
-    <h2>SEAFOOD RECIPES</h2>
-    <div id="seafood">
-      <table>
-        <tr><td>Recipe Name</td></tr>
-        <tr><td>Date Placed In Fridge</td></tr>
-      </table>
-    </div> 
-
-    <h2>LEFT-OVERS RECIPES</h2>
-    <div id="left-overs">
-      <table>
-        <tr><td>Recipe Name</td></tr>
-        <tr><td>Date Placed In Fridge</td></tr>
-      </table>
-    </div>
-
-    <h2>PASTA RECIPES</h2>
-
-    <div id="pasta">
-      <table>
-        <tr><td>Recipe Name</td></tr>
-        <tr><td>Date Placed In Fridge</td></tr>
-      </table>
-    </div>
-    
-    <h2>OTHER RECIPES</h2>
-    <div id="other">
-      <table>
-        <tr><td>Recipe Name</td></tr>
-        <tr><td>Date Placed In Fridge</td></tr>
-      </table>
-    </div>
-
-
+      <ul><li>Recipe 1</li></ul>
+    </Container>
   </div>);
   }
 }
