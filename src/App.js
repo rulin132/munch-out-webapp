@@ -7,6 +7,10 @@ import SignUp from "./SignUp";
 import app from "./base";
 import Recipes from "./Recipes";
 import ForgotPassword from "./ForgotPassword";
+import Categories from "./Categories";
+import RecipeView from "./Recipe/View";
+import RecipeEdit from "./Recipe/Edit";
+import Loader from "./Loader";
 class App extends React.Component {
   state = { loading: true, authenticated: false, user: null };
   
@@ -29,11 +33,13 @@ class App extends React.Component {
   }
 
   render(){
-    const { authenticated, loading } = this.state;
+    const { authenticated, loading, currentUser } = this.state;
 
-    if (loading) {
-      return <p>Loading..</p>;
-    }
+   if (loading) {
+      return (
+      <Loader />
+      );
+   }
 
     return (
       <Router>
@@ -43,11 +49,24 @@ class App extends React.Component {
             exact
             path="/recipes"
             component={Recipes}
-            authenticated={authenticated}
+            user={currentUser}
           />
+      
+           <Route exact path="/recipe/:id/edit" component={RecipeEdit}/>
+          <Route exact path="/recipe/show/:id" component={RecipeView} strict />
+
+          <Route exact path="/recipe/new" component={RecipeEdit} />
+        
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/passwordreset" component={ForgotPassword} />
+          <PrivateRoute
+            exact
+            path="/categories"
+            component={Categories}
+            user={currentUser}
+          />
+  
         </div>
       </Router>
     )

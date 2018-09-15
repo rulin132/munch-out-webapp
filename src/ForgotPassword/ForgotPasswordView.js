@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Container, Row, Col, Navbar, Button, Jumbotron, NavbarBrand, NavbarToggler, Collapse, Form, FormGroup, Alert } from 'reactstrap';
+import { Container, Row, Col, Form, FormGroup } from 'reactstrap';
 import "./sign-in.css";
 
 class ForgotPasswordView extends Component {
@@ -23,9 +23,6 @@ getForm() {
 render() {
   const form = this.getForm();
  
-
-
-
   return (
 <Container>
       <Col md="6" mx="auto" className="text-center">

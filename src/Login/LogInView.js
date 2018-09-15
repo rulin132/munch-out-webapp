@@ -1,9 +1,9 @@
 import React from "react";
-import { Container, Row, Col, Navbar, Button, Jumbotron, NavbarBrand, NavbarToggler, Collapse, Form, FormGroup, Alert } from 'reactstrap';
+import { Container, Row, Col, Button, Form, FormGroup } from 'reactstrap';
 import "./sign-in.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
-const LogInView = ({ onSubmit }) => {
+const LogInView = ({ onSubmit, onGoogleButtonClick }) => {
   return (
 <Container>
       <Col md="6" mx="auto" className="text-center">
@@ -38,7 +38,7 @@ const LogInView = ({ onSubmit }) => {
                   </div>
                   <FormGroup>
                     
-                     <Button block href="#">
+                     <Button block onClick={onGoogleButtonClick}>
                      <FontAwesomeIcon icon={faGoogle} /> Sign in with Google
                      </Button>
                   </FormGroup>

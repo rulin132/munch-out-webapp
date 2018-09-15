@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Container, Row, Col, Navbar, Button, Jumbotron, NavbarBrand, NavbarToggler, Collapse, Form } from 'reactstrap';
+import { Navbar, Nav, NavItem, NavLink, Button, NavbarBrand, NavbarToggler, Collapse, Form } from 'reactstrap';
 import {logout} from "./helpers/auth";
 
 const appTokenKey = "appToken";
@@ -26,11 +26,14 @@ class Navigation extends Component {
         localStorage.removeItem(appTokenKey);
         //this.props.history.push("/login");
         console.log("user signed out from firebase");
-}.bind(this));
+});
   }
   getMenu() {
-    if (this.props.authenticated) {
+    if (this.props.user) {
+  
+
         return (
+
             <Form className="form-inline my-2 my-lg-0 ml-auto">
                 <Button color="success" outline className="my-2 my-sm-0 mx-2 text-light"  href="sign-up.html">
                     Sign Up
@@ -39,9 +42,10 @@ class Navigation extends Component {
                     Sign In
                 </Button>
             </Form>
+            
         );
     }
-
+ 
     return (
         <Form className="form-inline my-2 my-lg-0 ml-auto">
      
@@ -51,14 +55,28 @@ class Navigation extends Component {
     </Form>
     );
   }
+
+ 
   render() {
+    const navInstance = (
+      <Nav className="ml-auto" navbar>
+      <NavItem>
+        <NavLink href="/categories/">Categories</NavLink>
+
+      </NavItem>
+      <NavItem>
+        <NavLink href="/recipes/">Recipes</NavLink>
+      </NavItem>
+    </Nav>
+    );
+
     const menuButtons = this.getMenu();
     return (
       <div>
       <Navbar color="dark" dark  expand="lg">
         <NavbarBrand href="/">Munch Out</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
-      
+        {navInstance}
         <Collapse isOpen={this.state.isOpen} navbar>
             {menuButtons}
         </Collapse>

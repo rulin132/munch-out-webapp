@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import LogInView from "./ForgotPasswordView";
 import { withRouter } from "react-router";
+
 import app from "../base";
 import ForgotPasswordView from './ForgotPasswordView';
-const firebaseAuthKey = "firebaseAuthInProgress";
-
-const appTokenKey = "appToken";
 
 class ForgotPasswordContainer extends Component {
   state = { sentPasswordRequest: false };

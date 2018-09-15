@@ -1,31 +1,33 @@
-import React from "react";
-import { Container, Row, Col, Navbar, Button, Jumbotron, NavbarBrand, NavbarToggler, Collapse, Form, Alert } from 'reactstrap';
-
-const Recipes = () => {
-  return (
-<div class="container">
-        <div class="col-md-6 mx-auto text-center">
-            <div class="header-title">
-                <h1 class="wv-heading--title">
-                    RECIPE CATEGORIES
-                </h1>
+import React, {Component} from "react";
+import { Container, ListGroup, Row, Col, Button } from 'reactstrap';
+import Navigation from '../Navigation';
+import Recipe from './Recipe';
+class Recipes extends Component {
+    render() {
+        const items = this.props.recipes;
+        console.log(items);
+        return (
+            <div>
+            <Navigation authenticated={this.props.authenticated} />
+            <Container>
+                <Row>
+                    <Col md="6" className="mx-auto text-center">
+                        <div className="header-title">
+                            <h1 className="wv-heading--title">
+                                RECIPES
+                            </h1>
+                        </div>
+                    </Col>
+                </Row>
+                {items.map((item) => <Recipe key={item.id} id={item.id} name={item.recipeName}  />)}
+                <Row>
+                    <Col md="4" className="mx-auto mt-5">
+                        <Button href="/recipe/new">Add Recipe</Button>
+                    </Col>
+                </Row>
+            </Container>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 mx-auto">
-                <ul class="list-group mt-3">
-                  <a href="#" class="list-group-item list-group-item-action">Chicken</a>
-                  <a href="#" class="list-group-item list-group-item-action">Beef</a>
-                  <a href="#" class="list-group-item list-group-item-action">Fish</a>
-                   <a href="#" class="list-group-item list-group-item-action">Pork</a>
-                  <a href="#" class="list-group-item list-group-item-action">Vegetarian</a>
-                  <a href="#" class="list-group-item list-group-item-action">Vegan</a>
-                  <a href="#" class="list-group-item list-group-item-action">Desserts</a>
-                </ul>
-            </div>
-        </div>
-    </div>
-  );
-};
-
+        );
+    }
+}
 export default Recipes;

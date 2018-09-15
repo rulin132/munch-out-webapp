@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
-const SignUpView = ({ onSubmit }) => {
+const SignUpView = ({ onSubmit, onGoogleButtonClick }) => {
   return (
     <div className="container">
     <div className="col-md-6 mx-auto text-center">
@@ -35,7 +35,7 @@ const SignUpView = ({ onSubmit }) => {
                    </div>
                 </div>
                 <div className="form-group">
-                   <a className="btn btn-block f-button" href="#">
+                   <a className="btn btn-block f-button" onClick={onGoogleButtonClick}>
                    <FontAwesomeIcon icon={faGoogle} /> Sign up with Google
                    </a>
                 </div>

@@ -1,0 +1,11 @@
+.img{
+    display: center;
+}
+
+.header {
+    width: 200px;
+    margin: 0 auto;
+}
+.header img {
+    float: left;
+}

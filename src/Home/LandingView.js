@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
 import { Container, Row, Col, Navbar, Button, Jumbotron, NavbarBrand, NavbarToggler, Collapse, Form } from 'reactstrap';
-import LandingView from './LandingView';
-import DashboardView from './DashboardView';
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +24,7 @@ class Home extends Component {
       
         <Collapse isOpen={this.state.isOpen} navbar>
           <Form className="form-inline my-2 my-lg-0 ml-auto">
-            <Button color="success" outline className="my-2 my-sm-0 mx-2 text-light"  href="sign-up.html">
+            <Button color="success" outline className="my-2 my-sm-0 mx-2 text-light"  href="/signup">
               Sign Up
             </Button>
             <Button color="success" className="my-2 my-sm-0 mx-2 text-light" href="./login">
@@ -42,7 +40,7 @@ class Home extends Component {
               <h1 className="display-2 text-center">Munch Out</h1>
               <p className="display-4 text-center">A website you can save all your favourite recipes on.</p>
               <p className="lead text-center">
-                <Button color="success" size="lg" href="sign-up.html">Register Free Account</Button>
+                <Button color="success" size="lg" href="/signup">Register Free Account</Button>
               </p>
               <p className="lead text-center">Already registered? 
                 <a className="underline" href="./login">Log in</a>.
