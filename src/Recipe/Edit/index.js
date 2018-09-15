@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 import firebase from "../../base";
 import Navigation from "../../Navigation";
-import {Container, Form, FormGroup, Label, Input, Row, Col, Button, InputGroup, InputGroupAddon} from 'reactstrap';
-import FileUploader from 'react-firebase-file-uploader';
+import {Container, Form, FormGroup, Label, Input, Row, Col, Button} from 'reactstrap';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
 import CookingTimes from './CookingTimes';
@@ -184,7 +184,7 @@ newImageUpload
        
 {this.state.image.url &&
 <div>
-    <img src={this.state.image.url} />
+    <img alt="" src={this.state.image.url} />
     </div>
     }
     {this.state.isUploading &&

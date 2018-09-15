@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Container, ListGroup, Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 import Navigation from '../Navigation';
 import Recipe from './Recipe';
 class Recipes extends Component {

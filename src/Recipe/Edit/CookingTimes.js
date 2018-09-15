@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Container, Form, FormGroup, Label, Input, Row, Col, Button, InputGroup, InputGroupAddon} from 'reactstrap';
+import {Label, Input, Row, Col, InputGroup, InputGroupAddon} from 'reactstrap';
 
 class CookingTimes extends Component {
     constructor(props) {
@@ -27,47 +27,66 @@ console.log(this.props.cookTimes);
        
     }
     changePrepTimeHours(e) {
-        this.state.prepTime.hours = e.target.value;
-        this.calculateTotalTime();
-        this.setState({prepTime:this.state.prepTime});
+        let prepTime = this.state.prepTime;
 
+        prepTime.hours = e.target.value;
+
+
+        this.setState({prepTime: prepTime});
+
+        this.calculateTotalTime();
         this.props.onCookingTimesChange(this.state);
 }
 changePrepTimeMinutes(e) {
-        this.state.prepTime.minutes =  e.target.value;
-        this.calculateTotalTime();
-        this.setState({prepTime:this.state.prepTime});
-        this.props.onCookingTimesChange(this.state);
+    let prepTime = this.state.prepTime;
+
+    prepTime.minutes =  e.target.value;
+
+
+    this.setState({prepTime: prepTime});
+
+    this.calculateTotalTime();
+    this.props.onCookingTimesChange(this.state);
 }
 
 changeCookTimeHours(e) {
-    this.state.cookTime.hours = e.target.value;
-    this.calculateTotalTime();
+    let cookTime = this.state.cookTime.hours 
+    cookTime.hours = e.target.value;
+
     this.setState({cookTime:this.state.cookTime});
+        
+    this.calculateTotalTime();
     this.props.onCookingTimesChange(this.state);
 }
 
 changeCookTimeMinutes(e) {
-    this.state.cookTime.minutes = e.target.value;
-    this.calculateTotalTime();
+    let cookTime = this.state.cookTime.hours 
+    cookTime.minutes = e.target.value;
+
+
     this.setState({cookTime:this.state.cookTime});
+
+    this.calculateTotalTime();
     this.props.onCookingTimesChange(this.state);
 }
 
 
 calculateTotalTime() {
-    var cookTimeHours = parseInt(this.state.cookTime.hours) || 0;
-    var cookTimeMinutes = parseInt(this.state.cookTime.minutes) || 0;
-    var prepTimeHours = parseInt(this.state.prepTime.hours) || 0;
-    var prepTimeMinutes = parseInt(this.state.prepTime.minutes) || 0;
+    var cookTimeHours = parseInt(this.state.cookTime.hours, 10) || 0;
+    var cookTimeMinutes = parseInt(this.state.cookTime.minutes, 10) || 0;
+    var prepTimeHours = parseInt(this.state.prepTime.hours, 10) || 0;
+    var prepTimeMinutes = parseInt(this.state.prepTime.minutes, 10) || 0;
 
     const cookTimeTotalMinutes = (cookTimeHours * 60 + cookTimeMinutes);
     const prepTimeTotalMinutes = (prepTimeHours * 60 + prepTimeMinutes);
 
     const hoursWithRemainer = (cookTimeTotalMinutes + prepTimeTotalMinutes) / 60;
-    this.state.totalTime.hours = Math.floor(hoursWithRemainer);
-
-    this.state.totalTime.minutes = Math.round(hoursWithRemainer % 1 * 60);
+    this.setState({
+        totalTime: {
+            hours:      Math.floor(hoursWithRemainer),
+            minutes:    Math.round(hoursWithRemainer % 1 * 60)
+        }
+    });
 
 }
     render() {
