@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 import firebase from "../../base";
 import Navigation from "../../Navigation";
-import {Container, Form, FormGroup, Label, Input, Row, Col, Button} from 'reactstrap';
+import {Container, Form, FormGroup, Label, Input, Row, Col, Button, FormFeedback, Alert, Fade} from 'reactstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
@@ -23,6 +23,9 @@ class RecipeContainer extends Component {
         this.handleMethodsChange = this.handleMethodsChange.bind(this);
         this.onChangeNotes = this.onChangeNotes.bind(this);
         this.handleUploadSuccess = this.handleUploadSuccess.bind(this);
+        this.handleChangeRecipeName = this.handleChangeRecipeName.bind(this);
+        this.validateName = this.validateName.bind(this);
+
         this.state = {
             recipeName: '',
             image: {
@@ -43,14 +46,18 @@ class RecipeContainer extends Component {
             methods: [],
             notes: '',
             createdAt: '',
-            updatedAt: ''
-
+            updatedAt: '',
+            isSubmitted: false,
+            formErrors: {
+                name: ''
+            },
         };
 
         const userId = localStorage.getItem(appTokenKey);
 
         this.firebaseRef = firebase.database().ref('users/' + userId + '/recipes');
     }
+
     getPageHeading() {
         if (this.recipeId) {
             return <h1>Edit Recipe</h1>;
@@ -59,11 +66,41 @@ class RecipeContainer extends Component {
         return <h1>Add Recipe</h1>;
     }
 
+    isValidForm() {
+        if (this.state.formErrors.name) {
+            return false;
+        }
+
+        return true;
+    }
+
     handleSubmit(e) {
         e.preventDefault();
         console.log(this.state);
-        let key = this.firebaseRef.push(this.state).key;
-        this.props.history.push("/recipes/show/" + key);
+
+        this.setState({isSubmitted: true});
+        
+        if (!this.isValidForm()) {
+            this.setState({displayFormError: 'Unable to save due to errors on the form'});
+
+            return;
+        }
+
+        // TODO edit recipe
+
+        let key = this.recipeId;
+
+        if (key) {
+        this.firebaseRef.update({
+            [key]:{
+              ...this.state 
+            }
+          });
+        } else {
+            key = this.firebaseRef.push(this.state).key;
+        }
+        
+        this.props.history.push("/recipe/show/" + key);
     }
 
     async handleUploadSuccess (filename) {
@@ -96,6 +133,7 @@ class RecipeContainer extends Component {
         }
     }
     changeRecipeName(e) {
+        this.validateName(e);
         this.setState({recipeName:this.state.recipeName});
     }
     handleIngredientsChange(ingredients) {
@@ -106,6 +144,11 @@ class RecipeContainer extends Component {
     }
     handleMethodsChange(methodSteps) {
         this.setState({methods: methodSteps});
+    }
+
+    handleChangeRecipeName(e) {
+        this.validateName(e);
+        this.setState({recipeName: e.target.value});
     }
     onChangeNotes(e) {
         this.setState({notes: e.target.value});
@@ -118,19 +161,16 @@ class RecipeContainer extends Component {
         handleUploadError = (error) => {
 
         this.setState({isUploading: false});
-
-        console.error(error);
-
     }
     componentWillMount(){
         let id = this.props.match.params.id;
         const userId = localStorage.getItem(appTokenKey);
-        console.log(id);
+
         let recipeRef = firebase.database().ref('users/' + userId + '/recipes/'+ id);
         recipeRef.once('value', (snapshot) => {
-          console.log('recipe');
-          console.log(snapshot.key);
-          this.setState({ recipeName: snapshot.val().recipeName,
+          this.setState({ 
+            id: snapshot.key,  
+            recipeName: snapshot.val().recipeName,
           image: {
               id: '',
               url: ''
@@ -151,9 +191,20 @@ class RecipeContainer extends Component {
           createdAt: '',
           updatedAt: '' });
         });
-        console.log(recipeRef);
       }
 
+      validateName(e) {
+        const { formErrors } = this.state
+     
+          if (e.target.value.length < 1) {
+            formErrors.name = 'invalid';
+            this.setState({formErrors: true});
+          } else {
+            formErrors.name = null;
+            this.setState({displayFormError: null});
+          }
+          this.setState({ formErrors })
+        }
   render() {
     const pageHeading = this.getPageHeading();
     const newImageUpload = (<div>
@@ -168,11 +219,23 @@ class RecipeContainer extends Component {
       
             <Container>
                 {pageHeading}
+
+                {this.state.displayFormError && (<Fade><Alert color="danger">{this.state.displayFormError}</Alert></Fade>)}
+               
                 <Form onSubmit={this.handleSubmit}>
              <Row>
                  <Col><FormGroup>
 
-          <Input type="text" name="name" id="recipeName" placeholder="Recipe Name" bsSize="lg"/>
+          <Input 
+            type="text" 
+            name="name" 
+            id="recipeName" 
+            placeholder="Recipe Name" 
+            value={this.state.recipeName} 
+            onChange={this.handleChangeRecipeName} 
+            bsSize="lg" 
+            invalid={this.state.isSubmitted && this.state.formErrors.name} />
+          <FormFeedback>Need to give this recipe an awesome name!</FormFeedback>
         </FormGroup></Col>
                  <Col><label className="file-upload">
                  {!this.state.image.url && 
@@ -223,7 +286,7 @@ newImageUpload
         
         <Row className="mt-5">
             <Col>
-            <Button color="danger" href="\recipe\show\asda">Cancel</Button> <Button type="submit">Submit</Button>
+            <Button color="danger" href={'/recipe/show/' + this.state.id}>Cancel</Button> <Button type="submit">Submit</Button>
             </Col>
         </Row>
         

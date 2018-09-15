@@ -1,15 +1,30 @@
 import React, {Component} from "react";
-import { Container, CardBody, CardTitle, CardText, Card, Button, Navbar, Input, Form, Row, Col } from 'reactstrap';
+import { Container, CardBody, CardTitle, CardText, Card, Button, Navbar, Input, Form, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Navigation from '../../Navigation';
 import Ingredients from './Ingredients';
 import Method from './Method';
 import CookingTimes from './CookingTimes';
 
 class RecipeView extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            modal: false
+          };
+
+        this.toggleDelete = this.toggleDelete.bind(this);
+    }
+
+    toggleDelete() {
+        this.setState({
+            modal: !this.state.modal
+        });
+    }
+ 
+
     render() {
         let recipeId = this.props.id;
         const recipeName = this.props.recipe.recipeName;
-        console.log(this.props.recipe);
 
         let times = {
             prep: {
@@ -23,6 +38,16 @@ class RecipeView extends Component {
         };
         return (
             <div>
+                <Modal isOpen={this.state.modal} toggle={this.toggle} >
+                    <ModalHeader toggle={this.toggle}>Delete Recipe</ModalHeader>
+                    <ModalBody>
+                        Are you sure you want to delete this recipe?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={() => this.props.handleDelete(recipeId)}>Delete Recipe</Button>{' '}
+                        <Button color="secondary" onClick={this.toggleDelete}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
                 <Navigation authenticated={this.props.authenticated} />
                 <Container>
                     <Navbar color="light" light>
@@ -36,6 +61,7 @@ class RecipeView extends Component {
                             <h1>{recipeName}</h1>
                             <div>
                                 <Button color="success" href={"/recipe/" + recipeId + "/edit/"}>Edit Recipe</Button>
+                                <Button color="danger" onClick={this.toggleDelete}>Delete Recipe</Button>
                             </div>
                         </Col>
                         <Col >
