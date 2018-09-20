@@ -4,27 +4,29 @@ import {Label, Input, Row, Col, InputGroup, InputGroupAddon} from 'reactstrap';
 class CookingTimes extends Component {
     constructor(props) {
         super(props);
-console.log(this.props.cookTimes);
+
+
         this.changePrepTimeHours = this.changePrepTimeHours.bind(this);
         this.changePrepTimeMinutes = this.changePrepTimeMinutes.bind(this);
         this.changeCookTimeHours = this.changeCookTimeHours.bind(this);
         this.changeCookTimeMinutes = this.changeCookTimeMinutes.bind(this);
         this.state =  {
-            prepTime: {
-                hours: '',
-                minutes: '',
-            },
-            cookTime: {
-                hours: '',
-                minutes: '',
-            },
+            prepTime: props.cookingTimes.prepTime,
+            cookTime: props.cookingTimes.cookTime,
             totalTime: {
                 hours: '',
                 minutes: '',
             }
         };
 
-       
+    }
+
+    componentWillMount(){
+        if (typeof this.props.cookingTimes !== 'undefined') {
+        this.setState({
+            prepTime: this.props.cookingTimes.prepTime
+        });
+    }
     }
     changePrepTimeHours(e) {
         let prepTime = this.state.prepTime;
@@ -50,21 +52,21 @@ changePrepTimeMinutes(e) {
 }
 
 changeCookTimeHours(e) {
-    let cookTime = this.state.cookTime.hours 
+    let cookTime = this.state.cookTime 
     cookTime.hours = e.target.value;
 
-    this.setState({cookTime:this.state.cookTime});
+    this.setState({cookTime:cookTime});
         
     this.calculateTotalTime();
     this.props.onCookingTimesChange(this.state);
 }
 
 changeCookTimeMinutes(e) {
-    let cookTime = this.state.cookTime.hours 
+    let cookTime = this.state.cookTime 
     cookTime.minutes = e.target.value;
 
 
-    this.setState({cookTime:this.state.cookTime});
+    this.setState({cookTime:cookTime});
 
     this.calculateTotalTime();
     this.props.onCookingTimesChange(this.state);
@@ -81,15 +83,13 @@ calculateTotalTime() {
     const prepTimeTotalMinutes = (prepTimeHours * 60 + prepTimeMinutes);
 
     const hoursWithRemainer = (cookTimeTotalMinutes + prepTimeTotalMinutes) / 60;
-    this.setState({
-        totalTime: {
+    return {
             hours:      Math.floor(hoursWithRemainer),
             minutes:    Math.round(hoursWithRemainer % 1 * 60)
-        }
-    });
-
+        };
 }
     render() {
+        const totalTime = this.calculateTotalTime();
         return (
             <Row  className="mt-5">
                 <Col className="col-8 col-lg-4">
@@ -116,9 +116,9 @@ calculateTotalTime() {
                         <Label for="recipeName">Total Time</Label>
 
                         <InputGroup>
-                        <Input value={this.state.totalTime.hours} />
+                        <Input value={totalTime.hours} />
                         <InputGroupAddon addonType="append">hours</InputGroupAddon>
-                        <Input placeholder="" value={this.state.totalTime.minutes} />
+                        <Input placeholder="" value={totalTime.minutes} />
                         <InputGroupAddon addonType="append">minutes</InputGroupAddon>
                     </InputGroup>
                     </Col>

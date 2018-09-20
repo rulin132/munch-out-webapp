@@ -1,77 +1,37 @@
-#h1{
+.jumbotron.hero-area {
+    background: url(../images/foods.jpg) center left / cover no-repeat #0079be;
+    color: white;
+    margin-bottom: 0;
+  }
+  
+  .jumbotron.hero-area .search-area {
+    background: rgba(40, 167, 69, 0.87);
+  
+    padding: 33px 32px;
+    
+    color: black;
+    
+    border-radius: 23px;
+  }
+  
+  .hero-area .search-lead-text {
+    font-size: 30px;
+  }
+  .hero-area .search-or-text {
+    padding: 30px 0;
+  }
 
-  text-align:center;
-  font-size: 20px;
-  font-family: sans-serif;
-  text-shadow: 4px 4px black;
-  color: white;
-   background: linear-gradient(45deg, red, blue);
-  line-height: 160px;
+  .hero-area a {
+    color: black;
+    width: 100%;
+    padding: .75rem 1.25rem;
+display: block;
+  }
 
-}
-
-#p{
-
-    text-align: center;
-    font-size: 18px;
-
-}
-
-.v{
-color: green;
-font-size: 18px;
-
-}
-
-#vegetable{
-    border: solid 1px;
-    border-collapse: collapse;
-}
-
-
-.f{
-  color: yellow;
-
-}
-
-#fruit{
-    border: solid 1px;
-    border-collapse: collapse;
-
-}
-
-
-.d{
-    color: blue;
-}
-
-#Dairy{
-    border: solid 1px;
-    border-collapse: collapse;
-
-}
-
-#meat{
-    border: solid 1px;
-    border-collapse: collapse;
-}
-
-#seafood{
-    border: solid 1px;
-    border-collapse: collapse;
-}
-
-#left-over{
-    border: solid 1px;
-    border-collapse: collapse;
-}
-
-#pasta{
-    border: solid 1px;
-    border-collapse: collapse;
-}
-
-#other{
-    border: solid 1px;
-    border-collapse: collapse;
-}
+  .hero-area li {
+      padding: 0;
+  }
+  .hero-area a:hover {
+      text-decoration: none;
+      background: gray;
+  }

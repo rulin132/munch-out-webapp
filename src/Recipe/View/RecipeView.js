@@ -24,7 +24,8 @@ class RecipeView extends Component {
 
     render() {
         let recipeId = this.props.id;
-        const recipeName = this.props.recipe.recipeName;
+        const recipe = this.props.recipe;
+        const recipeName = recipe.recipeName;
 
         let times = {
             prep: {
@@ -72,12 +73,12 @@ class RecipeView extends Component {
                     <div className="card-deck">
                     <Card>
                         <CardBody>
-                            <Ingredients />
+                            <Ingredients ingredients={recipe.ingredients} />
                         </CardBody>
                     </Card>
                     <Card>
                         <CardBody>
-                            <Method />
+                            <Method methods={recipe.methods} />
                         </CardBody>
                     </Card>
                 </div>
@@ -85,8 +86,8 @@ class RecipeView extends Component {
                 <Card>
                     <CardBody>
                     <CardTitle>Notes</CardTitle>
-                    <CardText>Some notes here</CardText>
-                    <CardText><small className="text-muted">Last updated 3 mins ago</small></CardText>
+                    <CardText>{recipe.notes}</CardText>
+                    <CardText><small className="text-muted">Last updated {recipe.createdAt} mins ago</small></CardText>
                     </CardBody>
                 </Card>
                 </div>

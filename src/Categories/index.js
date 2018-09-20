@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import { Form, Input, Button, Container, ListGroup, InputGroup, InputGroupAddon } from 'reactstrap';
 import { withRouter } from "react-router";
 
-import firebase from "../base";
-import Category from './Category';
+import firebase, {appTokenKey} from "../base";
 
 import Navigation from '../Navigation';
-
-const appTokenKey = "appToken";
+import Category from './Category';
 
 class CategoriesContainer extends Component {
     constructor(props) {
@@ -18,22 +16,20 @@ class CategoriesContainer extends Component {
             text: ''
         };
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.onChange = this.onChange.bind(this);
-        this.removeItem = this.removeItem.bind(this);
-
         const userId = localStorage.getItem(appTokenKey);
 
         this.firebaseRef = firebase.database().ref('users/' + userId + '/categories');
     }
 
     componentDidMount() {
-        this.firebaseRef.limitToLast(25).on('value', function(dataSnapshot) {
+        this.firebaseRef.limitToLast(25).on('value', (dataSnapshot) => {
             var items = [];
+
             this.setState({
                 items: items,
                 fetching: true
             });
+
             dataSnapshot.forEach(function(childSnapshot) {
                 var item = childSnapshot.val();
                 item['.key'] = childSnapshot.key;
@@ -43,18 +39,18 @@ class CategoriesContainer extends Component {
             this.setState({
                 items: items
             });
-        }.bind(this));
+        });
     }
 
     componentWillUnmount() {
         this.firebaseRef.off();
     }
     
-    onChange(e) {
+    onChange = (e) => {
         this.setState({text: e.target.value});
     }
     
-    removeItem(key) {
+    removeItem = (key) => {
         this.firebaseRef.child(key).remove();
     }
 
@@ -70,7 +66,7 @@ class CategoriesContainer extends Component {
         });
     };
     
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         if (this.state.text && this.state.text.trim().length !== 0) {
             this.firebaseRef.push({
@@ -101,12 +97,6 @@ class CategoriesContainer extends Component {
                             <ListGroup mt="3">
                             {items.map((item) => <Category key={item['.key']} item={item} removeItem={() => this.removeItem(item['.key']) }  />)}
                             
-                            {/* <a href="#" class="list-group-item list-group-item-action">Beef</a>
-                            <a href="#" class="list-group-item list-group-item-action">Fish</a>
-                            <a href="#" class="list-group-item list-group-item-action">Pork</a>
-                            <a href="#" class="list-group-item list-group-item-action">Vegetarian</a>
-                            <a href="#" class="list-group-item list-group-item-action">Vegan</a>
-                            <a href="#" class="list-group-item list-group-item-action">Desserts</a> */}
                             </ListGroup>
                             <Form onSubmit={ this.handleSubmit } className="mt-2">
                                 <InputGroup>

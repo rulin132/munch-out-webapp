@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { ListGroupItem, Input } from 'reactstrap';
+
 class Ingredient extends Component {
   constructor(props) {
     super(props);
@@ -14,15 +12,14 @@ class Ingredient extends Component {
     render() {
       const {item} = this.props;
 
-      return <ListGroupItem>
-   <Input type="text" value={ item.text } onChange={this.props.onChange} /> <span className="float-right button-group">
-   <a className="pull-right" onClick={ this.props.removeItem }
-            style={{ color: 'red', marginLeft: '10px', cursor: 'pointer' }}>
-        <FontAwesomeIcon icon={faTimesCircle} />
-        </a></span>
-      
-      
-    </ListGroupItem>;
+      return (
+        <ListGroupItem className="d-flex  justify-content-center">
+          <Input type="text" value={ item.text } className="p-2" onChange={this.props.onChange} />
+          <button type="button" className="close ml-3" aria-label="Close"  onClick={ this.props.removeItem }>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </ListGroupItem>
+      );
     }
 }
 
