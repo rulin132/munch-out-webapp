@@ -82,7 +82,7 @@ class RecipeView extends Component {
 
         return (
  
-            <div>
+            <div></div>
                
         );
     }
