@@ -6,7 +6,7 @@ class Category extends Component {
       const {item} = this.props;
 console.log(item);
       return <ListGroupItem>
-    <a href={"recipeByCategory/" + item.id}>{ item.text }</a>
+    <a href={"/categories/recipeByCategory/" + item.id}>{ item.text }</a>
       
       
     </ListGroupItem>;

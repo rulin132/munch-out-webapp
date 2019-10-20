@@ -17,7 +17,7 @@ class DashboardView extends Component {
               <Search />
 
               <p className="search-or-text">Or</p>
-              <Button color="primary" size="lg">Browse by Category</Button>
+              <Button color="primary" size="lg" href="/categories/">Browse by Category</Button>
             </Container>
           </Jumbotron>
           

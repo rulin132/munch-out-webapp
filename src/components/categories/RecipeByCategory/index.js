@@ -20,8 +20,8 @@ class RecipesContainer extends Component {
         return (
              <div>
             <Container>
-                {items && items.map((item, key) => 
-                    <Recipe key={item.id} id={key} name={item.recipeName}  />
+                {items && items.map((item) => 
+                    <Recipe key={item.id} id={item.id} name={item.recipeName}  />
                     )}
 
                 <Row>
