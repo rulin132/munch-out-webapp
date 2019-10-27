@@ -19,6 +19,9 @@ console.log(profile);
 
         }).then(() => {
             dispatch({ type: 'CREATE_RECIPE', recipe });
+        }).then(() => {
+            console.log('redirect');
+            dispatch(() => {history.push("/recipes/")});
         }).catch((err) => {
             dispatch({ type: 'CREATE_RECIPE_ERROR', err })
         })
@@ -58,6 +61,9 @@ export const deleteRecipe = (recipeId) => {
         let firestore = getFirestore();
         firestore.collection('recipes').doc(recipeId).delete().then(() => {
             dispatch({ type: 'DELETE_RECIPE', recipeId });
+        }).then(() => {
+            console.log('redirect');
+            dispatch(() => {history.push("/recipes/")});
         }).catch((err) => {
             dispatch({ type: 'DELETE_RECIPE_ERROR', err })
         });

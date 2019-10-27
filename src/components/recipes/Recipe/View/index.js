@@ -38,10 +38,7 @@ class RecipeContainer extends Component {
   }
 
   handleDelete(id) {
-
     this.props.deleteRecipe(id);
-    this.props.history.push("/recipes");
-  
   }
   render() {
     const recipe = this.props.recipe;
