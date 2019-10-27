@@ -20,7 +20,7 @@ class RecipeContainer extends Component {
 
     this.handleDelete = this.handleDelete.bind(this);
   }
-  componentWillMount(){
+  UNSAFE_componentWillMount(){
     // let id = this.props.match.params.id;
     // const userId = localStorage.getItem(appTokenKey);
 
@@ -34,7 +34,7 @@ class RecipeContainer extends Component {
   }
 
   toggleDelete = () => {
-      console.log('toggle delete');
+      this.setState({showDeleteModal: true})
   }
 
   handleDelete(id) {
@@ -50,7 +50,7 @@ if (recipe && recipe.recipeName) {
   console.log('recipe', recipe);
     return (
       <div>
-      <RecipeDeleteModal recipeId={this.props.recipeId} isOpen={this.state.showDeleteModal} toggle={this.toggleDelete.bind(this)} handleDelete={this.props.handleDelete} />
+      <RecipeDeleteModal recipeId={this.props.recipeId} isOpen={this.state.showDeleteModal} toggle={this.toggleDelete.bind(this)} handleDelete={this.handleDelete.bind(this)} />
       <Container>
         <Row className="mt-5">
           <Col md="10">

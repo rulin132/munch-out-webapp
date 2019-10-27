@@ -10,15 +10,33 @@ class Methods extends React.Component {
             text: ''
         };
     }
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
 
-    componentWillMount(){
-        this.setState({
-            items: this.props.items
-        })
+      this.setState({
+        items: nextProps.items,  
+      });
+      
     }
 
     onChange = (e) => {
         this.setState({text: e.target.value});
+    }
+
+    changeItem(key, e) {
+        const index = this.state.items.findIndex((item) => {
+            return item.id === key
+        });
+
+        const item = Object.assign({}, this.state.items[index]);
+
+        item.text = e.target.value;
+
+        const items =this.state.items;
+
+        items[index] = item;
+
+        this.setState({items:items});
     }
     removeItem(key) {
         let items = [...this.state.items];
@@ -54,7 +72,7 @@ class Methods extends React.Component {
 
                 <ListGroup mt="3">
                     {this.props.items && this.props.items.map((item, i) => 
-                        <Method num={methodNum++} key={i} item={item} onChange={this.props.onMethodsChange.bind(this, i)} removeItem={this.removeItem.bind(this, i) }  />
+                        <Method num={methodNum++} key={i} item={item} onChange={this.changeItem.bind(this, item.id)} removeItem={this.removeItem.bind(this, i) }  />
                     )}
                 </ListGroup>
 

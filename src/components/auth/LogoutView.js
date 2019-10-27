@@ -6,11 +6,12 @@ import { Redirect } from "react-router-dom";
 import { signOut } from '../../store/actions/authActions';
 
 class LogoutView extends Component {
+
   static propTypes = {
     dispatch: PropTypes.func.isRequired
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(signOut());
   }
 

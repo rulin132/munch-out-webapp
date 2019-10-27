@@ -5,9 +5,9 @@ import Ingredient from './Ingredient';
 class Ingredients extends React.Component {
     constructor(props) {
         super(props);
-    
+    console.log(props);
         this.state = {
-            items: this.props.items,
+            items: props.items,
             text: ''
         };
 
@@ -15,6 +15,15 @@ class Ingredients extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.removeItem = this.removeItem.bind(this);
         this.changeItem = this.changeItem.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+
+      this.setState({
+        items: nextProps.items,
+      });
+      
     }
 
     onChange(e) {

@@ -11,9 +11,7 @@ const LogInView = ({ onSubmit, onGoogleButtonClick }) => {
             <h1 className="wv-heading--title">
                SIGN IN
             </h1>
-            <p>or <a href="/signup">create an account</a></p>
-               
-      
+            <p>or <a href="/signup">create an account</a></p>      
          </div>
       </Col>
       <Row>

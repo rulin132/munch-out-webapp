@@ -2,35 +2,28 @@
     background: url(../images/foods.jpg) center left / cover no-repeat #0079be;
     color: white;
     margin-bottom: 0;
-  }
-  
-  .jumbotron.hero-area .search-area {
+}
+.jumbotron.hero-area .search-area {
     background: rgba(40, 167, 69, 0.87);
-  
     padding: 33px 32px;
-    
     color: black;
-
-  }
-  
-  .hero-area .search-lead-text {
+}
+.hero-area .search-lead-text {
     font-size: 30px;
-  }
-  .hero-area .search-or-text {
+}
+.hero-area .search-or-text {
     padding: 30px 0;
-  }
-
-  .hero-area a {
+}
+.hero-area a {
     color: black;
     width: 100%;
     padding: .75rem 1.25rem;
-display: block;
-  }
-
-  .hero-area li {
-      padding: 0;
-  }
-  .hero-area a:hover {
-      text-decoration: none;
-      background: gray;
-  }
+    display: block;
+}
+.hero-area li {
+    padding: 0;
+}
+.hero-area a:hover {
+    text-decoration: none;
+    background: gray;
+}

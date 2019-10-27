@@ -1,3 +1,5 @@
+import history from '../../history';
+
 export const createRecipe = (recipe) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         // async call here!!!
@@ -41,6 +43,9 @@ export const editRecipe = (recipe) => {
             updatedAt: new Date()
       }).then(() => {
             dispatch({ type: 'EDIT_RECIPE', recipe });
+        }).then(() => {
+            console.log('redirect');
+            dispatch(() => {history.push("/recipe/show/" + recipe.id)});
         }).catch((err) => {
             dispatch({ type: 'EDIT_RECIPE_ERROR', err })
         })
@@ -51,9 +56,7 @@ export const editRecipe = (recipe) => {
 export const deleteRecipe = (recipeId) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         let firestore = getFirestore();
-        firestore.collection('recipes').update({
-          [recipeId]: null
-        }).then(() => {
+        firestore.collection('recipes').doc(recipeId).delete().then(() => {
             dispatch({ type: 'DELETE_RECIPE', recipeId });
         }).catch((err) => {
             dispatch({ type: 'DELETE_RECIPE_ERROR', err })

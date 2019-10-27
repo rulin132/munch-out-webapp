@@ -10,7 +10,7 @@ class RecipeView extends Component {
           };
     }
 
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
      
         //const recipe = this.props.recipe;
        // const recipeCategories = recipe.categories;

@@ -52,7 +52,7 @@ class RecipeContainer extends Component {
     constructor(props, context) {
       super(props, context);
     }
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         console.log("ComponentWillMount");
         const id = this.props.match.params.id;
         console.log("Will fetch expert with id", id);

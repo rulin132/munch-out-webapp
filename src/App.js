@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Switch,  Route } from "react-router-dom";
+import { Router, Switch,  Route } from "react-router-dom";
 
 import NavigationBar from './components/layout/NavigationBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,12 +14,13 @@ import Categories from "./components/categories/Categories";
 import RecipeView from "./components/recipes/Recipe/View";
 import RecipeEdit from "./components/recipes/Recipe/Edit";
 import RecipeByCategory from "./components/categories/RecipeByCategory";
+import history from "./history";
 class App extends Component {
 
 
   render(){ 
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <div className="app">
           <NavigationBar mainNav="1" />
           <Switch>
@@ -36,14 +37,9 @@ class App extends Component {
             <Route exact path="/categories/recipeByCategory/:id" component={RecipeByCategory} />
           </Switch>
         </div>
-      </BrowserRouter>
+      </Router>
     )
   }
 }
 
 export default App;
-
-
-
-
-
