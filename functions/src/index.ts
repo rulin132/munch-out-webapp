@@ -1,13 +1,8 @@
 import * as functions from 'firebase-functions';
+import request = require('request-promise');
+const _ = require('lodash');
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-
-const gcs = require('@google-cloud/storage')();
+const gcs = require('@google-cloud/storage');
 
 import { tmpdir } from 'os';
 import { join, dirname, extname, basename } from 'path';
@@ -15,7 +10,8 @@ import { join, dirname, extname, basename } from 'path';
 import * as sharp from 'sharp';
 import * as fs from 'fs-extra';
 
-const getResizeDimensions = (bucketDir) => {
+
+const getResizeDimensions = (bucketDir: string) => {
     if (bucketDir === 'images/recipes') {
         return [
             [64, 64],
@@ -32,14 +28,28 @@ export const generateThumbs = functions.storage
   .onFinalize(async object => {
     const bucket = gcs.bucket(object.bucket);
     const filePath = object.name;
+   
+
+    if (typeof filePath === 'undefined') {
+      return;
+    }
+
     const fileName = filePath.split('/').pop();
+
+    if (typeof fileName === 'undefined') {
+      return;
+    }
     const bucketDir = dirname(filePath);
 
     const workingDir = join(tmpdir(), 'thumbs');
     const tmpFilePath = join(workingDir, 'source.png');
 
-   
-
+    if (typeof object === 'undefined') {
+      return;
+    }
+    if (typeof object.contentType === 'undefined') {
+      return;
+    }  
     if (fileName.includes('thumb@') || !object.contentType.includes('image')) {
       console.log('exiting function');
       return false;
@@ -53,16 +63,14 @@ export const generateThumbs = functions.storage
       destination: tmpFilePath
     });
 
-        // 3. Resize the images and define an array of upload promises
-        const sizes = getResizeDimensions(bucketDir);
+    // 3. Resize the images and define an array of upload promises
+    const sizes = getResizeDimensions(bucketDir);
 
-        if (!sizes) {
-    
-    
-            console.log('No sizes for this folder, exiting');
-    
-            return null;
-        }
+    if (!sizes) {
+        console.log('No sizes for this folder, exiting');
+
+        return null;
+    }
  
     const uploadPromises = sizes.map(async size => {
         const fileExt = extname(fileName);
@@ -89,5 +97,62 @@ export const generateThumbs = functions.storage
     await Promise.all(uploadPromises);
 
     // 5. Cleanup remove the tmp/thumbs from the filesystem
-    return fs.unlinkSync(workingDir);
+    fs.removeSync(workingDir);
+    return true
   });
+
+exports.indexRecipesToElastic = functions.firestore.document('/recipes/{recipe_id}')
+  .onWrite((change, context) => {
+    const postData = change.after.data();
+    const recipe_id = context.params.recipe_id; 
+
+    console.log('Indexing post:', postData);
+
+    const elasticSearchConfig = functions.config().elasticsearch;
+    const elasticSearchUrl = elasticSearchConfig.url + 'recipes/_create/' + recipe_id;
+    const elasticSearchMethod = postData ? 'POST' : 'DELETE';
+    const elasticsearchFields = ['recipeName','notes'];
+
+    const elasticSearchRequest = {
+      method: elasticSearchMethod,
+      url: elasticSearchUrl,
+      auth: {
+        username: elasticSearchConfig.username,
+        password: elasticSearchConfig.password
+      },
+      body: _.pick(postData, elasticsearchFields),
+      json: true
+    };
+
+    return request(elasticSearchRequest).then((response: any) => {
+      console.log('ElasticSearch response', response);
+  })
+});
+
+const express = require('express');
+const app = express();
+const cors = require('cors');
+// Automatically allow cross-origin requests
+app.use(cors({ origin: true }));
+
+app.get('/search/:query', (req: { params: { query: any; }; }, res: { send: (arg0: any) => void; }) => {
+  const query = req.params.query;
+  const elasticSearchConfig = functions.config().elasticsearch;
+  const elasticSearchUrl = elasticSearchConfig.url + 'recipes/_search?q=*'+ query+'*';
+  console.log('querying elasticsearch:', elasticSearchUrl);
+  const elasticSearchRequest = {
+    method: 'GET',
+    url: elasticSearchUrl,
+    auth: {
+      username: elasticSearchConfig.username,
+      password: elasticSearchConfig.password
+    },
+    json: true
+  };
+
+  return request(elasticSearchRequest).then((response: any) => {
+    res.send(response);
+})
+});
+
+exports.searchRecipes = functions.https.onRequest(app);

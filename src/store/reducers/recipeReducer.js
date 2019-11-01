@@ -20,8 +20,9 @@ const recipeReducer = (state = initState, action) => {
             console.log('error deleting recipe', action.recipe);
             return state;
         case 'GET_RESULTS':
-            console.log('get results', action.recipe);
-            return state;
+            return {
+                data: action,
+              };
         case 'LOAD':
            return {
              data: action.data,

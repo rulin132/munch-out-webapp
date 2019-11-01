@@ -2,6 +2,7 @@ import React from 'react'
 import {ListGroup, ListGroupItem} from 'reactstrap';
 
 const Suggestions = (props) => {
+  console.log(props);
   const options = props.results.map(r => (
     <ListGroupItem key={r.id}>
       <a href={"recipe/show/" + r.id}>{r.name}</a>

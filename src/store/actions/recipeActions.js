@@ -72,22 +72,35 @@ export const deleteRecipe = (recipeId) => {
 
 export const searchForRecipe = (queryText) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
-        const firestore = getFirestore();
 
-        let query = firestore
-            .orderByChild("recipeName")
-            .startAt(queryText)
-            .endAt(queryText + "\uf8ff");
+        if (queryText.length > 0) {
+        fetch('https://us-central1-munch-out-4b90e.cloudfunctions.net/searchRecipes/search/' + queryText)
+        .then((response) => response.json())
+        .then((findresponse)=>{
+            const hits = findresponse.hits.hits;
+          console.log(hits);
+          let results = [];
 
-        query.on("value", (snapshot) => {
-            let results = [];
+          hits.forEach(s => {
+              results.push({ id: s._id, name: s._source.recipeName });
+          });
+          console.log(results);
+          dispatch({ type: 'GET_RESULTS', results });
+        })
+    } else {
+        let results = [];
+        dispatch({ type: 'GET_RESULTS', results });
+    }
 
-            snapshot.forEach(s => {
-                results.push({ name: s.val().recipeName, id: s.key });
-            });
+    //     query.on("value", (snapshot) => {
+    //         let results = [];
 
-            dispatch({ type: 'GET_RESULTS', results });
-      });  
+    //         snapshot.forEach(s => {
+    //             results.push({ name: s.val().recipeName, id: s.key });
+    //         });
+
+    //         dispatch({ type: 'GET_RESULTS', results });
+    //   });  
     }
 }
 

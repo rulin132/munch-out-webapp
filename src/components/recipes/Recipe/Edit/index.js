@@ -155,16 +155,14 @@ class RecipeContainer extends Component {
 
         if (this.props.recipeId) {
             console.log('this.state.recipe', this.props.recipeId);
-            // this.state.recipe.id = this.props.recipeId;
+            this.state.recipe.id = this.props.recipeId;
             this.setState({recipe: {
                     ...this.state.recipe, 
                     id: this.props.recipeId
                 }
             });
 
-            this.props.editRecipe(this.state.recipe, function () {
-                
-            });
+            this.props.editRecipe(this.state.recipe);
         } else {
             this.props.createRecipe(this.state.recipe);
         }

@@ -25,6 +25,10 @@ html, body {
 .hero-area a {
     color: white;
 }
+
+.hero-area .list-group a {
+    color: black;
+}
 a.underline {
     text-decoration: underline;
 }
