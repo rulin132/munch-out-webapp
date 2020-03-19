@@ -3,21 +3,25 @@ import { Container, Row, Col, Button, Form, FormGroup } from 'reactstrap';
 import "./sign-in.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
+
+jn 
 const LogInView = ({ onSubmit, onGoogleButtonClick }) => {
   return (
-<Container>
-      <Col md="6" mx="auto" className="text-center">
+
+<Container className="login-container">
+   <Row>
+      <Col md="12" mx="auto" className="text-center login-form">
+      <img class="mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
          <div className="header-title">
-            <h1 className="wv-heading--title">
+            <h3>
                SIGN IN
-            </h1>
+            </h3>
             <p>or <a href="/signup">create an account</a></p>      
          </div>
-      </Col>
-      <Row>
-         <Col md="4" mx="auto">
             <div className="myform form ">
                <Form onSubmit={onSubmit}>
+              
+                  
                   <FormGroup>
                      <input type="email" name="email"  className="form-control my-input" id="email" placeholder="Email" />
                   </FormGroup>
@@ -44,7 +48,6 @@ const LogInView = ({ onSubmit, onGoogleButtonClick }) => {
                   </p>
                </Form>
             </div>
-     
       </Col>
     </Row>
    </Container>

@@ -1,21 +1,36 @@
 html, body {
     height: 100%;
 }
+
+.navbar-brand {
+    background: url(../images/vertical.png) no-repeat center;
+    background-size: contain;
+    width: 200px;
+    text-indent: 9999px;
+}
+
 .hero-area{
     text-align: center;
     color: white;
     background: #0079BF;
     background: linear-gradient(135deg, #0079Be 0, #5068C5 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@color-1', endColorstr='@color-2', GradientType=1);
+ 
     color: #ffffff;
     padding-top: 4em;
 }
 .hero-area.dash-hero {
     margin-top: 10px;
 }
-.jumbotron.hero-area {
+
+.jumbotron.hero-area.landing-hero-area {
     background: linear-gradient(135deg, #0079BF 0, #5067C5 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@color-1', endColorstr='@color-2', GradientType=1);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    background: url(../images/baked-blurred-background-cake-1998635-darken.jpg) center left / cover no-repeat #0079be;
     color: white;
     padding-top: 4em;
 }
@@ -42,6 +57,8 @@ a.underline {
 .file-upload p, .file-upload .btn {
     margin: 15px 0;
 }
-.hero-area .navbar.bg-dark {
+.hero-area .navbar.is-top {
     background: transparent !important;
 }
+
+/* is-top */

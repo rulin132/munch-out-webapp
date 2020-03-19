@@ -35,8 +35,9 @@ class SignIn extends Component {
       }
 
       return (
-      <Container>
-         <Col md="6" mx="auto" className="text-center">
+      <Container className="login-container">
+         <Col md="6" mx="auto" className="text-center col-centered">
+            
             <div className="header-title">
                <h1 className="wv-heading--title">
                   SIGN IN
@@ -45,7 +46,7 @@ class SignIn extends Component {
             </div>
          </Col>
          <Row>
-            <Col md="4" mx="auto">
+            <Col md="4" mx="auto" className="col-centered">
                <div className="myform form ">
                   <Form onSubmit={this.handleSubmit}>
                      <FormGroup>

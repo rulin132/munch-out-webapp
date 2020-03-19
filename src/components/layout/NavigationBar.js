@@ -7,7 +7,7 @@ import '../../assets/styles/App.css';
 import { Navbar, NavbarBrand, NavbarToggler } from 'reactstrap';
 import {withRouter} from 'react-router-dom';
 const NavigationBar = (props) => {
-    const { auth, mainNav, landingView } = props;
+    const { auth, mainNav, landingView, className } = props;
 
     if (mainNav && props.location.pathname === '/') {
         return <div></div>;
@@ -16,9 +16,11 @@ const NavigationBar = (props) => {
     const authLinks = auth.uid ? <SignedInLinks /> :
         <SignedOutLinks />;
 
-    const className  = landingView ? 'fixed-top' : ''; 
+    const classNameOut  = (landingView ? 'fixed-top' : '') + ' ' + className; 
+
+
     return (
-        <Navbar color="dark" dark  expand="lg" className={className}>
+        <Navbar color="dark" dark  expand="lg" className={classNameOut}>
             <NavbarBrand href="/">Munch Out</NavbarBrand>
             <NavbarToggler  />
           

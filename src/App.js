@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Router, Switch,  Route } from "react-router-dom";
+import { Router, Switch,  Route, Redirect } from "react-router-dom";
 
 import NavigationBar from './components/layout/NavigationBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,19 +22,10 @@ class App extends Component {
     return (
       <Router history={history}>
         <div className="app">
-          <NavigationBar mainNav="1" />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/recipes" component={Recipes} />
-            <Route exact path="/recipe/:id/edit" component={RecipeEdit} />
-            <Route exact path="/recipe/show/:id" component={RecipeView} strict />
-            <Route exact path="/recipe/new" component={RecipeEdit} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={SignUp} />
-            <Route path='/signout'component={LogoutView} />
-            <Route exact path="/passwordreset" component={ForgotPassword} />
-            <Route exact path="/categories" component={Categories} />
-            <Route exact path="/categories/recipeByCategory/:id" component={RecipeByCategory} />
+        <Switch>
+          <Route exact path="/(login)" component={AuthContainer}/>
+          <Route exact path="/(signup)" component={AuthContainer}/>
+          <Route component={DefaultContainer}/>
           </Switch>
         </div>
       </Router>
@@ -42,4 +33,34 @@ class App extends Component {
   }
 }
 
+
+
+const AuthContainer = () => (
+  <div className="container">
+     <Switch>
+    <Route path="/login" component={Login} />
+    <Route exact path="/signup" component={SignUp} />
+    </Switch>
+  </div>
+)
+
+
+ const DefaultContainer = () => (
+    <div>
+    <NavigationBar mainNav="1" />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/recipes" component={Recipes} />
+            <Route exact path="/recipe/:id/edit" component={RecipeEdit} />
+            <Route exact path="/recipe/show/:id" component={RecipeView} strict />
+            <Route exact path="/recipe/new" component={RecipeEdit} />
+            {/* <Route exact path="/login" component={Login} /> */}
+         
+            <Route path='/signout'component={LogoutView} />
+            <Route exact path="/passwordreset" component={ForgotPassword} />
+            <Route exact path="/categories" component={Categories} />
+            <Route exact path="/categories/recipeByCategory/:id" component={RecipeByCategory} />
+          </Switch>
+    </div>
+ )
 export default App;
